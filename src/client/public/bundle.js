@@ -66,16 +66,22 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	function Card(props) {
+	  var img;
+	  img = props.faceup ? props.front : props.back;
+	  console.log(img);
+	
 	  return _react2.default.createElement(
 	    'button',
 	    { className: 'card' },
-	    props.value
+	    img
 	  );
 	}
 	
 	var Tableau = function (_React$Component) {
 	  _inherits(Tableau, _React$Component);
 	
+	  // This component should really just store whether or not the cards are face up
+	  // The problem here is that when I am dealing the cards each card will have to be given a suit by the deck constructor/shuffler
 	  function Tableau(props) {
 	    _classCallCheck(this, Tableau);
 	
@@ -90,7 +96,7 @@
 	  _createClass(Tableau, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(Card, { value: this.state.cardValue });
+	      return _react2.default.createElement(Card, { value: this.state.cardValue, front: 'front', back: 'back', faceup: false });
 	    }
 	  }]);
 	
