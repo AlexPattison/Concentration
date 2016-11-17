@@ -10,9 +10,15 @@ function Card(props) {
 }
 
 class Tableau extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardValue: 'Ace'
+    }
+  }
   render() {
     return (
-      <Card />
+      <Card value={this.state.cardValue}/>
     )
   }
 }

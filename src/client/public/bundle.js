@@ -76,16 +76,21 @@
 	var Tableau = function (_React$Component) {
 	  _inherits(Tableau, _React$Component);
 	
-	  function Tableau() {
+	  function Tableau(props) {
 	    _classCallCheck(this, Tableau);
 	
-	    return _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
+	
+	    _this.state = {
+	      cardValue: 'Ace'
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Tableau, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(Card, null);
+	      return _react2.default.createElement(Card, { value: this.state.cardValue });
 	    }
 	  }]);
 	
