@@ -66,14 +66,12 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	function Card(props) {
-	  var img;
-	  img = props.faceup ? props.front : props.back;
-	  console.log(img);
 	  var path = "../assets/cards/SVG-cards-1.3/";
+	  var faceup = props.value + '_of_' + props.suit + '.svg';
 	  return _react2.default.createElement(
 	    'button',
 	    { className: 'card' },
-	    _react2.default.createElement('img', { src: path + props.value + '_of_' + props.suit + '.svg' })
+	    _react2.default.createElement('img', { src: path + (props.faceup ? faceup : 'back') })
 	  );
 	}
 	
@@ -88,7 +86,7 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      cardValue: 'ace',
+	      cardValue: 10,
 	      cardSuit: 'clubs'
 	    };
 	    return _this;
@@ -109,6 +107,12 @@
 	}(_react2.default.Component);
 	
 	(0, _reactDom.render)(_react2.default.createElement(Tableau, null), document.getElementById('game'));
+	
+	function createDeck() {
+	  var suits = ['clubs', 'diamonds', 'spades', 'hears'];
+	
+	  var values = ['ace', 'king', 'queen', 'jack', 10, 9, 8, 7, 6, 5, 4, 3, 2];
+	}
 
 /***/ },
 /* 1 */

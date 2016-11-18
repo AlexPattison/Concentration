@@ -2,13 +2,11 @@ import React from 'react';
 import {render} from 'react-dom';
 
 function Card(props) {
-  var img;
-  img = props.faceup ? props.front : props.back;
-  console.log(img);
   var path = "../assets/cards/SVG-cards-1.3/"
+  var faceup = props.value + '_of_' + props.suit + '.svg'
   return (
     <button className="card">
-      <img src={path + props.value + '_of_' + props.suit + '.svg'}></img>
+      <img src={path + (props.faceup ? faceup : 'back')}></img>
     </button>
   )
 }
@@ -19,7 +17,7 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardValue: 'ace',
+      cardValue: 10,
       cardSuit: 'clubs'
     }
   }
@@ -35,3 +33,30 @@ class Tableau extends React.Component {
 render (
   <Tableau />, document.getElementById('game')
 )
+
+function createDeck() {
+  const suits = [
+    'clubs',
+    'diamonds',
+    'spades',
+    'hears'
+  ];
+
+  const values = [
+    'ace',
+    'king',
+    'queen',
+    'jack',
+    10,
+    9,
+    8,
+    7,
+    6,
+    5,
+    4,
+    3,
+    2
+  ];
+
+
+}
