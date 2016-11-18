@@ -109,10 +109,23 @@
 	(0, _reactDom.render)(_react2.default.createElement(Tableau, null), document.getElementById('game'));
 	
 	function createDeck() {
+	  var deck = [];
+	
 	  var suits = ['clubs', 'diamonds', 'spades', 'hears'];
 	
 	  var values = ['ace', 'king', 'queen', 'jack', 10, 9, 8, 7, 6, 5, 4, 3, 2];
+	
+	  for (var i = 0; i < values.length; i++) {
+	    for (var j = 0; j < suits.length; j++) {
+	      deck.push([i, j]);
+	    }
+	  }
+	
+	  return deck;
+	  console.log(deck);
 	}
+	
+	createDeck();
 
 /***/ },
 /* 1 */
