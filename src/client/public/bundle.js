@@ -70,7 +70,9 @@
 	  var faceup = props.value + '_of_' + props.suit + '.svg';
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'card' },
+	    { className: 'card', onClick: function onClick() {
+	        return props.onClick();
+	      } },
 	    _react2.default.createElement('img', { src: path + (props.faceup ? faceup : 'back.svg') })
 	  );
 	}
@@ -94,25 +96,27 @@
 	  _createClass(Tableau, [{
 	    key: 'handleClick',
 	    value: function handleClick(i) {
-	      var deck = this.state.slice();
-	
-	      deck[i];
+	      console.log("I'm card: ", i);
 	    }
 	  }, {
 	    key: 'renderCard',
 	    value: function renderCard(card, key) {
-	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key });
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key, onClick: function onClick() {
+	          return _this2.handleClick(key);
+	        } });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        this.state.deck.map(function (card, key) {
-	          return _this2.renderCard(card, key);
+	          return _this3.renderCard(card, key);
 	        })
 	      );
 	    }
