@@ -24,7 +24,10 @@ class Tableau extends React.Component {
   }
   render() {
     return (
-      <Card value={this.state.cardValue} front="front" back="back" faceup={false}/>
+      <div>
+        <img src="../assets/cards/SVG-cards-1.3/2_of_clubs.svg"></img>
+        <Card value={this.state.cardValue} front="front" back="back" faceup={true}/>
+      </div>
     )
   }
 }

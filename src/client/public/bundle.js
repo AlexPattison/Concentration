@@ -96,7 +96,12 @@
 	  _createClass(Tableau, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(Card, { value: this.state.cardValue, front: 'front', back: 'back', faceup: false });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('img', { src: '../assets/cards/SVG-cards-1.3/2_of_clubs.svg' }),
+	        _react2.default.createElement(Card, { value: this.state.cardValue, front: 'front', back: 'back', faceup: true })
+	      );
 	    }
 	  }]);
 	
