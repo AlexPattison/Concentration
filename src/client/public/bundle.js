@@ -69,7 +69,7 @@
 	  var path = "../assets/cards/SVG-cards-1.3/";
 	  var faceup = props.value + '_of_' + props.suit + '.svg';
 	  return _react2.default.createElement(
-	    'div',
+	    'button',
 	    { className: 'card', onClick: function onClick() {
 	        return props.onClick();
 	      } },
@@ -97,13 +97,18 @@
 	    key: 'handleClick',
 	    value: function handleClick(i) {
 	      console.log("I'm card: ", i);
+	      var deck = this.state.deck.slice();
+	      console.log("deck[i]: ", deck[i]);
+	      deck[i].faceup = !deck[i].faceup;
+	      console.log("faceup", deck[i].faceup);
+	      this.setState({ deck: deck });
 	    }
 	  }, {
 	    key: 'renderCard',
 	    value: function renderCard(card, key) {
 	      var _this2 = this;
 	
-	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key, onClick: function onClick() {
+	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: card.faceup, key: key, onClick: function onClick() {
 	          return _this2.handleClick(key);
 	        } });
 	    }

@@ -5,9 +5,9 @@ function Card(props) {
   var path = "../assets/cards/SVG-cards-1.3/"
   var faceup = props.value + '_of_' + props.suit + '.svg'
   return (
-    <div className="card" onClick={() => props.onClick()}>
+    <button className="card" onClick={() => props.onClick()}>
       <img src={path + (props.faceup ? faceup : 'back.svg')}></img>
-    </div>
+    </button>
   )
 }
 
@@ -23,10 +23,15 @@ class Tableau extends React.Component {
 
   handleClick(i) {
     console.log("I'm card: ", i)
+    var deck = this.state.deck.slice();
+    console.log("deck[i]: ", deck[i])
+    deck[i].faceup = !deck[i].faceup;
+    console.log("faceup", deck[i].faceup);
+    this.setState({deck: deck});
   }
 
   renderCard(card, key) {
-    return <Card value={card.value} suit={card.suit} faceup={key % 2 === 0 ? true : false} key={key} onClick={() => this.handleClick(key)}/>
+    return <Card value={card.value} suit={card.suit} faceup={card.faceup} key={key} onClick={() => this.handleClick(key)}/>
   }
 
   render() {
