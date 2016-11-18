@@ -5,10 +5,10 @@ function Card(props) {
   var img;
   img = props.faceup ? props.front : props.back;
   console.log(img);
-
+  var path = "../assets/cards/SVG-cards-1.3/"
   return (
     <button className="card">
-      {img}
+      <img src={path + props.value + '_of_' + props.suit + '.svg'}></img>
     </button>
   )
 }
@@ -19,14 +19,14 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardValue: 'Ace'
+      cardValue: 'ace',
+      cardSuit: 'clubs'
     }
   }
   render() {
     return (
       <div>
-        <img src="../assets/cards/SVG-cards-1.3/2_of_clubs.svg"></img>
-        <Card value={this.state.cardValue} front="front" back="back" faceup={true}/>
+        <Card value={this.state.cardValue} suit={this.state.cardSuit} front="front" back="back" faceup={true}/>
       </div>
     )
   }

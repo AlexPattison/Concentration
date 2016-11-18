@@ -69,11 +69,11 @@
 	  var img;
 	  img = props.faceup ? props.front : props.back;
 	  console.log(img);
-	
+	  var path = "../assets/cards/SVG-cards-1.3/";
 	  return _react2.default.createElement(
 	    'button',
 	    { className: 'card' },
-	    img
+	    _react2.default.createElement('img', { src: path + props.value + '_of_' + props.suit + '.svg' })
 	  );
 	}
 	
@@ -88,7 +88,8 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      cardValue: 'Ace'
+	      cardValue: 'ace',
+	      cardSuit: 'clubs'
 	    };
 	    return _this;
 	  }
@@ -99,8 +100,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('img', { src: '../assets/cards/SVG-cards-1.3/2_of_clubs.svg' }),
-	        _react2.default.createElement(Card, { value: this.state.cardValue, front: 'front', back: 'back', faceup: true })
+	        _react2.default.createElement(Card, { value: this.state.cardValue, suit: this.state.cardSuit, front: 'front', back: 'back', faceup: true })
 	      );
 	    }
 	  }]);
