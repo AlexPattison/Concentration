@@ -25,6 +25,7 @@ class Tableau extends React.Component {
   render() {
     return (
       <div>
+        {createDeck()}
         <Card value={this.state.cardValue} suit={this.state.cardSuit} front="front" back="back" faceup={true}/>
       </div>
     )
@@ -63,12 +64,9 @@ function createDeck() {
 
   for (let i = 0; i < values.length; i ++) {
     for (let j = 0; j < suits.length; j ++) {
-      deck.push([i, j])
+      deck.push([values[i], suits[j]]);
     }
   }
 
   return deck;
-  console.log(deck);
 }
-
-createDeck();

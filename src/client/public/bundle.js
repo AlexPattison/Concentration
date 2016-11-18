@@ -98,6 +98,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        createDeck(),
 	        _react2.default.createElement(Card, { value: this.state.cardValue, suit: this.state.cardSuit, front: 'front', back: 'back', faceup: true })
 	      );
 	    }
@@ -117,15 +118,12 @@
 	
 	  for (var i = 0; i < values.length; i++) {
 	    for (var j = 0; j < suits.length; j++) {
-	      deck.push([i, j]);
+	      deck.push([values[i], suits[j]]);
 	    }
 	  }
 	
 	  return deck;
-	  console.log(deck);
 	}
-	
-	createDeck();
 
 /***/ },
 /* 1 */
