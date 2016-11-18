@@ -86,21 +86,23 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      cardValue: 10,
-	      cardSuit: 'clubs'
+	      deck: createDeck()
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(Tableau, [{
+	    key: 'handleClick',
+	    value: function handleClick(i) {
+	      // const deck
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var deck = createDeck();
-	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        deck.map(function (card, key) {
+	        this.state.deck.map(function (card, key) {
 	          return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key });
 	        })
 	      );

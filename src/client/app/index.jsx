@@ -17,17 +17,18 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardValue: 10,
-      cardSuit: 'clubs'
+      deck: createDeck()
     }
   }
 
-  render() {
-    let deck = createDeck();
+  handleClick(i) {
+    // const deck
+  }
 
+  render() {
     return (
       <div>
-        {deck.map((card, key) => (
+        {this.state.deck.map((card, key) => (
           <Card value={card.value} suit={card.suit} faceup={key % 2 === 0 ? true : false} key={key}/>
         ))}
       </div>
