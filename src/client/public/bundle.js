@@ -69,9 +69,9 @@
 	  var path = "../assets/cards/SVG-cards-1.3/";
 	  var faceup = props.value + '_of_' + props.suit + '.svg';
 	  return _react2.default.createElement(
-	    'button',
+	    'div',
 	    { className: 'card' },
-	    _react2.default.createElement('img', { src: path + (props.faceup ? faceup : 'back') })
+	    _react2.default.createElement('img', { src: path + (props.faceup ? faceup : 'back.svg') })
 	  );
 	}
 	
@@ -95,11 +95,14 @@
 	  _createClass(Tableau, [{
 	    key: 'render',
 	    value: function render() {
+	      var deck = createDeck();
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        createDeck(),
-	        _react2.default.createElement(Card, { value: this.state.cardValue, suit: this.state.cardSuit, front: 'front', back: 'back', faceup: true })
+	        deck.map(function (card, key) {
+	          return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key });
+	        })
 	      );
 	    }
 	  }]);
@@ -112,13 +115,13 @@
 	function createDeck() {
 	  var deck = [];
 	
-	  var suits = ['clubs', 'diamonds', 'spades', 'hears'];
+	  var suits = ['clubs', 'diamonds', 'spades', 'hearts'];
 	
 	  var values = ['ace', 'king', 'queen', 'jack', 10, 9, 8, 7, 6, 5, 4, 3, 2];
 	
 	  for (var i = 0; i < values.length; i++) {
 	    for (var j = 0; j < suits.length; j++) {
-	      deck.push([values[i], suits[j]]);
+	      deck.push({ value: values[i], suit: suits[j] });
 	    }
 	  }
 	
