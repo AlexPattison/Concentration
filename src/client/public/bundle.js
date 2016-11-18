@@ -94,16 +94,25 @@
 	  _createClass(Tableau, [{
 	    key: 'handleClick',
 	    value: function handleClick(i) {
-	      // const deck
+	      var deck = this.state.slice();
+	
+	      deck[i];
+	    }
+	  }, {
+	    key: 'renderCard',
+	    value: function renderCard(card, key) {
+	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        this.state.deck.map(function (card, key) {
-	          return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: key % 2 === 0 ? true : false, key: key });
+	          return _this2.renderCard(card, key);
 	        })
 	      );
 	    }

@@ -22,14 +22,20 @@ class Tableau extends React.Component {
   }
 
   handleClick(i) {
-    // const deck
+    const deck = this.state.slice();
+
+    deck[i]
+  }
+
+  renderCard(card, key) {
+    return <Card value={card.value} suit={card.suit} faceup={key % 2 === 0 ? true : false} key={key}/>
   }
 
   render() {
     return (
       <div>
         {this.state.deck.map((card, key) => (
-          <Card value={card.value} suit={card.suit} faceup={key % 2 === 0 ? true : false} key={key}/>
+          this.renderCard(card, key)
         ))}
       </div>
     )
