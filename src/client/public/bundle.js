@@ -90,8 +90,8 @@
 	    _this.state = {
 	      deck: createDeck(),
 	      numberFaceup: 0,
-	      cardValue: null,
-	      previous: null
+	      previous: null,
+	      score: 0
 	    };
 	    return _this;
 	  }
@@ -101,8 +101,9 @@
 	    value: function handleClick(i) {
 	      var deck = this.state.deck.slice();
 	
-	      if (deck[i].value === this.state.cardValue) {
+	      if (this.state.previous && deck[i].value === this.state.previous.value) {
 	        console.log("Great Job");
+	        this.setState({ score: this.state.score += 1 });
 	      }
 	
 	      if (this.state.numberFaceup === 2) {
@@ -114,7 +115,8 @@
 	      this.setState({
 	        deck: deck,
 	        numberFaceup: this.state.numberFaceup += 1,
-	        cardValue: deck[i].value
+	        cardValue: deck[i].value,
+	        previous: deck[i]
 	      });
 	    }
 	  }, {
@@ -134,6 +136,12 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Score: ',
+	          this.state.score
+	        ),
 	        this.state.deck.map(function (card, key) {
 	          return _this3.renderCard(card, key);
 	        })
