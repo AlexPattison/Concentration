@@ -2,12 +2,12 @@ import React from 'react';
 import {render} from 'react-dom';
 
 function Card(props) {
-  var path = "../assets/cards/SVG-cards-1.3/"
-  var faceup = props.value + '_of_' + props.suit + '.svg'
+  const path = "../assets/cards/SVG-cards-1.3/"
+  const faceup = props.value + '_of_' + props.suit + '.svg'
   return (
-    <button className="card" onClick={() => props.onClick()}>
+    <span className="card" onClick={() => props.onClick()}>
       <img src={path + (props.faceup ? faceup : 'back.svg')}></img>
-    </button>
+    </span>
   )
 }
 
@@ -17,17 +17,19 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: createDeck()
+      deck: shuffleDeck(createDeck()),
+      numberFaceup: 0
     }
   }
 
   handleClick(i) {
-    console.log("I'm card: ", i)
-    var deck = this.state.deck.slice();
-    console.log("deck[i]: ", deck[i])
+    const deck = this.state.deck.slice();
+    if (this.state.numberFaceup === 2) {
+      return;
+    }
+
     deck[i].faceup = !deck[i].faceup;
-    console.log("faceup", deck[i].faceup);
-    this.setState({deck: deck});
+    this.setState({deck: deck, numberFaceup: this.state.numberFaceup += 1});
   }
 
   renderCard(card, key) {
@@ -36,7 +38,7 @@ class Tableau extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{height: '100%', width: '100%'}}>
         {this.state.deck.map((card, key) => (
           this.renderCard(card, key)
         ))}
@@ -77,8 +79,17 @@ function createDeck() {
 
   for (let i = 0; i < values.length; i ++) {
     for (let j = 0; j < suits.length; j ++) {
-      deck.push({value: values[i], suit: suits[j]});
+      deck.push({value: values[i], suit: suits[j], faceup: false});
     }
+  }
+
+  return deck;
+}
+
+function shuffleDeck(deck) {
+  for (let i = deck.length - 1; i > 0; i --) {
+    let j = Math.floor(Math.random() * i);
+    [deck[i], deck[j]] = [deck[j], deck[i]];
   }
 
   return deck;

@@ -69,7 +69,7 @@
 	  var path = "../assets/cards/SVG-cards-1.3/";
 	  var faceup = props.value + '_of_' + props.suit + '.svg';
 	  return _react2.default.createElement(
-	    'button',
+	    'span',
 	    { className: 'card', onClick: function onClick() {
 	        return props.onClick();
 	      } },
@@ -88,7 +88,8 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      deck: createDeck()
+	      deck: shuffleDeck(createDeck()),
+	      numberFaceup: 0
 	    };
 	    return _this;
 	  }
@@ -96,12 +97,13 @@
 	  _createClass(Tableau, [{
 	    key: 'handleClick',
 	    value: function handleClick(i) {
-	      console.log("I'm card: ", i);
 	      var deck = this.state.deck.slice();
-	      console.log("deck[i]: ", deck[i]);
+	      if (this.state.numberFaceup === 2) {
+	        return;
+	      }
+	
 	      deck[i].faceup = !deck[i].faceup;
-	      console.log("faceup", deck[i].faceup);
-	      this.setState({ deck: deck });
+	      this.setState({ deck: deck, numberFaceup: this.state.numberFaceup += 1 });
 	    }
 	  }, {
 	    key: 'renderCard',
@@ -119,7 +121,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { style: { height: '100%', width: '100%' } },
 	        this.state.deck.map(function (card, key) {
 	          return _this3.renderCard(card, key);
 	        })
@@ -141,8 +143,19 @@
 	
 	  for (var i = 0; i < values.length; i++) {
 	    for (var j = 0; j < suits.length; j++) {
-	      deck.push({ value: values[i], suit: suits[j] });
+	      deck.push({ value: values[i], suit: suits[j], faceup: false });
 	    }
+	  }
+	
+	  return deck;
+	}
+	
+	function shuffleDeck(deck) {
+	  for (var i = deck.length - 1; i > 0; i--) {
+	    var j = Math.floor(Math.random() * i);
+	    var _ref = [deck[j], deck[i]];
+	    deck[i] = _ref[0];
+	    deck[j] = _ref[1];
 	  }
 	
 	  return deck;
