@@ -17,19 +17,32 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: shuffleDeck(createDeck()),
-      numberFaceup: 0
+      deck: createDeck(),
+      numberFaceup: 0,
+      cardValue: null,
+      previous: null
     }
   }
 
   handleClick(i) {
     const deck = this.state.deck.slice();
+
+    if (deck[i].value === this.state.cardValue) {
+      console.log("Great Job");
+    }
+    
     if (this.state.numberFaceup === 2) {
+      this.setState({previous: null, cardValue: null, numberFaceup: 0})
       return;
     }
 
+
     deck[i].faceup = !deck[i].faceup;
-    this.setState({deck: deck, numberFaceup: this.state.numberFaceup += 1});
+    this.setState({
+      deck: deck,
+      numberFaceup: this.state.numberFaceup += 1,
+      cardValue: deck[i].value
+    });
   }
 
   renderCard(card, key) {
@@ -38,7 +51,7 @@ class Tableau extends React.Component {
 
   render() {
     return (
-      <div style={{height: '100%', width: '100%'}}>
+      <div>
         {this.state.deck.map((card, key) => (
           this.renderCard(card, key)
         ))}

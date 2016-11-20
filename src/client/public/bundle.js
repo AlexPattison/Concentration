@@ -88,8 +88,10 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      deck: shuffleDeck(createDeck()),
-	      numberFaceup: 0
+	      deck: createDeck(),
+	      numberFaceup: 0,
+	      cardValue: null,
+	      previous: null
 	    };
 	    return _this;
 	  }
@@ -98,12 +100,22 @@
 	    key: 'handleClick',
 	    value: function handleClick(i) {
 	      var deck = this.state.deck.slice();
+	
+	      if (deck[i].value === this.state.cardValue) {
+	        console.log("Great Job");
+	      }
+	
 	      if (this.state.numberFaceup === 2) {
+	        this.setState({ previous: null, cardValue: null, numberFaceup: 0 });
 	        return;
 	      }
 	
 	      deck[i].faceup = !deck[i].faceup;
-	      this.setState({ deck: deck, numberFaceup: this.state.numberFaceup += 1 });
+	      this.setState({
+	        deck: deck,
+	        numberFaceup: this.state.numberFaceup += 1,
+	        cardValue: deck[i].value
+	      });
 	    }
 	  }, {
 	    key: 'renderCard',
@@ -121,7 +133,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { style: { height: '100%', width: '100%' } },
+	        null,
 	        this.state.deck.map(function (card, key) {
 	          return _this3.renderCard(card, key);
 	        })
