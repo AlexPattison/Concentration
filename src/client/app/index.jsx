@@ -2,8 +2,9 @@ import React from 'react';
 import {render} from 'react-dom';
 
 function Card(props) {
-  const path = "../assets/cards/SVG-cards-1.3/"
-  const faceup = props.value + '_of_' + props.suit + '.svg'
+  const path = "../assets/cards/SVG-cards-1.3/";
+  const faceup = props.value + '_of_' + props.suit + '.svg';
+
   return (
     <span className="card" onClick={() => props.onClick()}>
       <img src={path + (props.faceup ? faceup : 'back.svg')}></img>
@@ -12,45 +13,108 @@ function Card(props) {
 }
 
 class Tableau extends React.Component {
-  // This component should really just store whether or not the cards are face up
-  // The problem here is that when I am dealing the cards each card will have to be given a suit by the deck constructor/shuffler
   constructor(props) {
     super(props);
     this.state = {
       deck: createDeck(),
       numberFaceup: 0,
-      previous: null,
+      prevIdx: null,
       score: 0,
     }
   }
 
   handleClick(i) {
+    console.log("We made it")
     const deck = this.state.deck.slice();
+    const prev = deck[this.state.prevIdx];
+    const cur = deck[i];
 
-    if (this.state.previous && (deck[i].value === this.state.previous.value)) {
-      console.log("Great Job");
-      this.setState({score: this.state.score += 1})
-    }
-
-    deck[i].faceup = !deck[i].faceup;
-    this.setState({
-      deck: deck,
-      numberFaceup: this.state.numberFaceup += 1,
-      cardValue: deck[i].value,
-      previous: deck[i]
-    });
-
-    if (this.state.numberFaceup === 2) {
-      deck[i].faceup = false;
-      previous.faceup = false;
-      this.setState({deck: deck})
+    if (this.state.numberFaceup === 2 || this.state.prevIdx === i) {
       return;
     }
 
-    if (this.state.numberFaceup === 2) {
-      this.setState({previous: null, cardValue: null, numberFaceup: 0})
-      return;
+    this.handleFlip(deck, cur, prev);
+
+    // this.setState({
+    //   deck: deck,
+    //   numberFaceup: this.state.numberFaceup += 1,
+    //   prevIdx: i
+    // })
+
+    // if (prev && (prev.value === cur.value)) {
+    //   console.log("Great Job");
+    //   [prev.value, prev.suit, cur.value, cur.suit] = [2, 'clubs', 2, 'clubs'];
+    //   console.log("We're about to hit setTimeout")
+    //   setTimeout(() =>
+    //     this.setState({deck: deck});
+    //     console.log("three seconds later"),
+    //     3000);
+    //
+    //   // setTimeout(() => this.setState({deck: deck}), 5000)
+    //   console.log("making sure")
+    // }
+
+
+    //
+    // if (this.state.prevIdx && (deck[i].value === deck[this.state.prevIdx].value)) {
+    //   deck[i]
+    //   console.log("Great Job");
+    //   this.setState({score: this.state.score += 1})
+    // }
+
+    // this.setState({
+    //   deck: deck,
+    //   numberFaceup: this.state.numberFaceup += 1,
+    //   cardValue: deck[i].value,
+    //   prev: deck[i]
+    // });
+    //
+    // if (this.state.numberFaceup === 2) {
+    //   deck[i].faceup = false;
+    //   prev.faceup = false;
+    //   this.setState({deck: deck})
+    //   return;
+    // }
+    //
+    // if (this.state.numberFaceup === 2) {
+    //   this.setState({prev: null, cardValue: null, numberFaceup: 0})
+    //   return;
+    // }
+
+
+
+
+
+
+
+    /****************Psuedo****************/
+    // Return early if there are already two cards face up
+
+    // flip the card that was clicked
+
+    // If there was a previous, check for match
+      // If there is a match, setTimeout to change cards to transparent
+
+    // IT SEEMS LIKE I PROBABLY DON'T NEED A COUNTER
+      // IF THERE IS A PREV, WE NEED TO FLIP THE CARDS OR REMOVE THE CARDS
+      // ELSE WE JUST FLIP THE CURRENT CARD
+  }
+
+  handleFlip(deck, cur, prev) {
+    cur.faceup = !cur.faceup;
+    this.setState({deck: deck});
+    let match = false;
+
+    if (!prev) {
+      prev = cur;
+    } else if (cur.value === prev.value) {
+      console.log("We have a match!");
+      match = true;
+    } else {
+      console.log("Not a match");
     }
+
+    setTimeout(() => console.log('match: ', match), 3000);
   }
 
   renderCard(card, key) {
