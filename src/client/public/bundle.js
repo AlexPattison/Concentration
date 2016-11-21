@@ -106,11 +106,6 @@
 	        this.setState({ score: this.state.score += 1 });
 	      }
 	
-	      if (this.state.numberFaceup === 2) {
-	        this.setState({ previous: null, cardValue: null, numberFaceup: 0 });
-	        return;
-	      }
-	
 	      deck[i].faceup = !deck[i].faceup;
 	      this.setState({
 	        deck: deck,
@@ -118,6 +113,18 @@
 	        cardValue: deck[i].value,
 	        previous: deck[i]
 	      });
+	
+	      if (this.state.numberFaceup === 2) {
+	        deck[i].faceup = false;
+	        previous.faceup = false;
+	        this.setState({ deck: deck });
+	        return;
+	      }
+	
+	      if (this.state.numberFaceup === 2) {
+	        this.setState({ previous: null, cardValue: null, numberFaceup: 0 });
+	        return;
+	      }
 	    }
 	  }, {
 	    key: 'renderCard',
