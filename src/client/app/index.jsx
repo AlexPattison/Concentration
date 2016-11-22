@@ -24,7 +24,7 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: createDeck(),
+      deck: shuffleDeck(createDeck()),
       numberFaceup: 0,
       prevIdx: null,
       score: 0,
@@ -54,11 +54,8 @@ class Tableau extends React.Component {
       this.setState({prevIdx: i})
     } else {
       if (cur.value === prev.value) {
-        console.log("We have a match!");
         setTimeout(() => this.handleMatch(deck, i), 1000);
-        // this.handleMatch(deck, i);
       } else {
-        console.log("Not a match");
         setTimeout(() => this.handleMismatch(deck, i), 3000);
       }
     }

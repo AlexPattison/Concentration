@@ -95,7 +95,7 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      deck: createDeck(),
+	      deck: shuffleDeck(createDeck()),
 	      numberFaceup: 0,
 	      prevIdx: null,
 	      score: 0
@@ -131,13 +131,10 @@
 	        this.setState({ prevIdx: i });
 	      } else {
 	        if (cur.value === prev.value) {
-	          console.log("We have a match!");
 	          setTimeout(function () {
 	            return _this2.handleMatch(deck, i);
 	          }, 1000);
-	          // this.handleMatch(deck, i);
 	        } else {
-	          console.log("Not a match");
 	          setTimeout(function () {
 	            return _this2.handleMismatch(deck, i);
 	          }, 3000);
