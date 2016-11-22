@@ -27,7 +27,7 @@ class Tableau extends React.Component {
       currentPlayer: 'playerOne',
       playerOne: [],
       playerTwo: [],
-      deck: createDeck(),
+      deck: shuffleDeck(createDeck()),
       numberFaceup: 0,
       prevIdx: null,
     }
