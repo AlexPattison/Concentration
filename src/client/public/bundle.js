@@ -59,6 +59,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -95,13 +97,12 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      currentPlayer: 1,
+	      currentPlayer: 'playerOne',
 	      playerOne: [],
 	      playerTwo: [],
 	      deck: createDeck(),
 	      numberFaceup: 0,
-	      prevIdx: null,
-	      score: 0
+	      prevIdx: null
 	    };
 	    return _this;
 	  }
@@ -155,12 +156,15 @@
 	      this.setState({
 	        deck: deck,
 	        numberFaceup: 0,
-	        prevIdx: null
+	        prevIdx: null,
+	        currentPlayer: this.state.currentPlayer === 'playerOne' ? 'playerTwo' : 'playerOne'
 	      });
 	    }
 	  }, {
 	    key: 'handleMatch',
 	    value: function handleMatch(deck, i) {
+	      var _setState;
+	
 	      var match = [deck[i], deck[this.state.prevIdx]];
 	      var dup = match.map(function (card) {
 	        return JSON.parse(JSON.stringify(card));
@@ -170,13 +174,7 @@
 	      match[1].blank = _ref2[1];
 	
 	
-	      this.setState({
-	        playerOne: this.state.playerOne.concat(dup),
-	        deck: deck,
-	        numberFaceup: 0,
-	        prevIdx: null,
-	        score: this.state.score += 1
-	      });
+	      this.setState((_setState = {}, _defineProperty(_setState, this.state.currentPlayer, this.state[this.state.currentPlayer].concat(dup)), _defineProperty(_setState, 'deck', deck), _defineProperty(_setState, 'numberFaceup', 0), _defineProperty(_setState, 'prevIdx', null), _setState));
 	    }
 	  }, {
 	    key: 'renderCard',
@@ -199,13 +197,13 @@
 	          'p',
 	          null,
 	          'Player One Score: ',
-	          this.state.playerOne.length
+	          this.state.playerOne.length / 2
 	        ),
 	        _react2.default.createElement(
 	          'p',
 	          null,
 	          'Player Two Score: ',
-	          this.state.playerTwo.length
+	          this.state.playerTwo.length / 2
 	        ),
 	        this.state.deck.map(function (card, key) {
 	          return _this4.renderCard(card, key);

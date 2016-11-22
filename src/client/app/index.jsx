@@ -24,13 +24,12 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPlayer: 1,
+      currentPlayer: 'playerOne',
       playerOne: [],
       playerTwo: [],
       deck: createDeck(),
       numberFaceup: 0,
       prevIdx: null,
-      score: 0,
     }
   }
 
@@ -71,6 +70,7 @@ class Tableau extends React.Component {
       deck: deck,
       numberFaceup: 0,
       prevIdx: null,
+      currentPlayer: this.state.currentPlayer === 'playerOne' ? 'playerTwo' : 'playerOne'
     })
   }
 
@@ -80,11 +80,10 @@ class Tableau extends React.Component {
     [match[0].blank, match[1].blank] = [true, true];
 
     this.setState({
-      playerOne: this.state.playerOne.concat(dup),
+      [this.state.currentPlayer]: this.state[this.state.currentPlayer].concat(dup),
       deck: deck,
       numberFaceup: 0,
       prevIdx: null,
-      score: this.state.score += 1
     })
   }
 
@@ -95,8 +94,8 @@ class Tableau extends React.Component {
   render() {
     return (
       <div>
-        <p>Player One Score: {this.state.playerOne.length}</p>
-        <p>Player Two Score: {this.state.playerTwo.length}</p>
+        <p>Player One Score: {this.state.playerOne.length / 2}</p>
+        <p>Player Two Score: {this.state.playerTwo.length / 2}</p>
         {this.state.deck.map((card, key) => (
           this.renderCard(card, key)
         ))}
