@@ -24,7 +24,9 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentPlayer: 1,
       playerOne: [],
+      playerTwo: [],
       deck: createDeck(),
       numberFaceup: 0,
       prevIdx: null,
@@ -93,13 +95,20 @@ class Tableau extends React.Component {
   render() {
     return (
       <div>
-        <p>Score: {this.state.score}</p>
+        <p>Player One Score: {this.state.playerOne.length}</p>
+        <p>Player Two Score: {this.state.playerTwo.length}</p>
         {this.state.deck.map((card, key) => (
           this.renderCard(card, key)
         ))}
-        <p>Matches: </p>
+        <p>Player One Matches: </p>
         <div>
           {this.state.playerOne.map((card, key) => (
+            this.renderCard(card, key)
+          ))}
+        </div>
+        <p>Player Two Matches: </p>
+        <div>
+          {this.state.playerTwo.map((card, key) => (
             this.renderCard(card, key)
           ))}
         </div>

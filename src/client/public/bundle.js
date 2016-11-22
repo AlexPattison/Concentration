@@ -95,7 +95,9 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
+	      currentPlayer: 1,
 	      playerOne: [],
+	      playerTwo: [],
 	      deck: createDeck(),
 	      numberFaceup: 0,
 	      prevIdx: null,
@@ -196,8 +198,14 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Score: ',
-	          this.state.score
+	          'Player One Score: ',
+	          this.state.playerOne.length
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Player Two Score: ',
+	          this.state.playerTwo.length
 	        ),
 	        this.state.deck.map(function (card, key) {
 	          return _this4.renderCard(card, key);
@@ -205,12 +213,24 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Matches: '
+	          'Player One Matches: '
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          null,
 	          this.state.playerOne.map(function (card, key) {
+	            return _this4.renderCard(card, key);
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Player Two Matches: '
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.playerTwo.map(function (card, key) {
 	            return _this4.renderCard(card, key);
 	          })
 	        )
