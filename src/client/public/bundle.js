@@ -98,109 +98,88 @@
 	  _createClass(Tableau, [{
 	    key: 'handleClick',
 	    value: function handleClick(i) {
-	      console.log("We made it");
-	      var deck = this.state.deck.slice();
-	      var prev = deck[this.state.prevIdx];
-	      var cur = deck[i];
-	
 	      if (this.state.numberFaceup === 2 || this.state.prevIdx === i) {
 	        return;
 	      }
 	
-	      this.handleFlip(deck, cur, prev);
-	
-	      // this.setState({
-	      //   deck: deck,
-	      //   numberFaceup: this.state.numberFaceup += 1,
-	      //   prevIdx: i
-	      // })
-	
-	      // if (prev && (prev.value === cur.value)) {
-	      //   console.log("Great Job");
-	      //   [prev.value, prev.suit, cur.value, cur.suit] = [2, 'clubs', 2, 'clubs'];
-	      //   console.log("We're about to hit setTimeout")
-	      //   setTimeout(() =>
-	      //     this.setState({deck: deck});
-	      //     console.log("three seconds later"),
-	      //     3000);
-	      //
-	      //   // setTimeout(() => this.setState({deck: deck}), 5000)
-	      //   console.log("making sure")
-	      // }
-	
-	
-	      //
-	      // if (this.state.prevIdx && (deck[i].value === deck[this.state.prevIdx].value)) {
-	      //   deck[i]
-	      //   console.log("Great Job");
-	      //   this.setState({score: this.state.score += 1})
-	      // }
-	
-	      // this.setState({
-	      //   deck: deck,
-	      //   numberFaceup: this.state.numberFaceup += 1,
-	      //   cardValue: deck[i].value,
-	      //   prev: deck[i]
-	      // });
-	      //
-	      // if (this.state.numberFaceup === 2) {
-	      //   deck[i].faceup = false;
-	      //   prev.faceup = false;
-	      //   this.setState({deck: deck})
-	      //   return;
-	      // }
-	      //
-	      // if (this.state.numberFaceup === 2) {
-	      //   this.setState({prev: null, cardValue: null, numberFaceup: 0})
-	      //   return;
-	      // }
-	
-	
-	      /****************Psuedo****************/
-	      // Return early if there are already two cards face up
-	
-	      // flip the card that was clicked
-	
-	      // If there was a previous, check for match
-	      // If there is a match, setTimeout to change cards to transparent
-	
-	      // IT SEEMS LIKE I PROBABLY DON'T NEED A COUNTER
-	      // IF THERE IS A PREV, WE NEED TO FLIP THE CARDS OR REMOVE THE CARDS
-	      // ELSE WE JUST FLIP THE CURRENT CARD
+	      this.handleFlip(this.state, i);
 	    }
 	  }, {
 	    key: 'handleFlip',
-	    value: function handleFlip(deck, cur, prev) {
+	    value: function handleFlip(state, i) {
+	      var _this2 = this;
+	
+	      var deck = state.deck.slice();
+	      var prev = deck[this.state.prevIdx];
+	      var cur = deck[i];
+	
 	      cur.faceup = !cur.faceup;
-	      this.setState({ deck: deck });
-	      var match = false;
+	      this.setState({
+	        deck: deck,
+	        numberFaceup: this.state.numberFaceup += 1
+	      });
 	
 	      if (!prev) {
-	        prev = cur;
-	      } else if (cur.value === prev.value) {
-	        console.log("We have a match!");
-	        match = true;
+	        this.setState({ prevIdx: i });
 	      } else {
-	        console.log("Not a match");
+	        if (cur.value === prev.value) {
+	          console.log("We have a match!");
+	          setTimeout(function () {
+	            return _this2.handleMatch(deck, i);
+	          }, 3000);
+	          // this.handleMatch(deck, i);
+	        } else {
+	          console.log("Not a match");
+	          setTimeout(function () {
+	            return _this2.handleMismatch(deck, i);
+	          }, 1000);
+	        }
 	      }
+	    }
+	  }, {
+	    key: 'handleMismatch',
+	    value: function handleMismatch(deck, i) {
+	      var _ref = [false, false];
+	      deck[i].faceup = _ref[0];
+	      deck[this.state.prevIdx].faceup = _ref[1];
 	
-	      setTimeout(function () {
-	        return console.log('match: ', match);
-	      }, 3000);
+	
+	      this.setState({
+	        deck: deck,
+	        numberFaceup: 0,
+	        prevIdx: null
+	      });
+	    }
+	  }, {
+	    key: 'handleMatch',
+	    value: function handleMatch(deck, i) {
+	      var _ref2 = [2, 2, 'clubs', 'clubs'];
+	      deck[i].value = _ref2[0];
+	      deck[this.state.prevIdx].value = _ref2[1];
+	      deck[i].suit = _ref2[2];
+	      deck[this.state.prevIdx].suit = _ref2[3];
+	
+	
+	      this.setState({
+	        deck: deck,
+	        numberFaceup: 0,
+	        prevIdx: null,
+	        score: this.state.score += 1
+	      });
 	    }
 	  }, {
 	    key: 'renderCard',
 	    value: function renderCard(card, key) {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return _react2.default.createElement(Card, { value: card.value, suit: card.suit, faceup: card.faceup, key: key, onClick: function onClick() {
-	          return _this2.handleClick(key);
+	          return _this3.handleClick(key);
 	        } });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -212,7 +191,7 @@
 	          this.state.score
 	        ),
 	        this.state.deck.map(function (card, key) {
-	          return _this3.renderCard(card, key);
+	          return _this4.renderCard(card, key);
 	        })
 	      );
 	    }
@@ -242,9 +221,9 @@
 	function shuffleDeck(deck) {
 	  for (var i = deck.length - 1; i > 0; i--) {
 	    var j = Math.floor(Math.random() * i);
-	    var _ref = [deck[j], deck[i]];
-	    deck[i] = _ref[0];
-	    deck[j] = _ref[1];
+	    var _ref3 = [deck[j], deck[i]];
+	    deck[i] = _ref3[0];
+	    deck[j] = _ref3[1];
 	  }
 	
 	  return deck;

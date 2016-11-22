@@ -24,97 +24,57 @@ class Tableau extends React.Component {
   }
 
   handleClick(i) {
-    console.log("We made it")
-    const deck = this.state.deck.slice();
-    const prev = deck[this.state.prevIdx];
-    const cur = deck[i];
-
     if (this.state.numberFaceup === 2 || this.state.prevIdx === i) {
       return;
     }
 
-    this.handleFlip(deck, cur, prev);
-
-    // this.setState({
-    //   deck: deck,
-    //   numberFaceup: this.state.numberFaceup += 1,
-    //   prevIdx: i
-    // })
-
-    // if (prev && (prev.value === cur.value)) {
-    //   console.log("Great Job");
-    //   [prev.value, prev.suit, cur.value, cur.suit] = [2, 'clubs', 2, 'clubs'];
-    //   console.log("We're about to hit setTimeout")
-    //   setTimeout(() =>
-    //     this.setState({deck: deck});
-    //     console.log("three seconds later"),
-    //     3000);
-    //
-    //   // setTimeout(() => this.setState({deck: deck}), 5000)
-    //   console.log("making sure")
-    // }
-
-
-    //
-    // if (this.state.prevIdx && (deck[i].value === deck[this.state.prevIdx].value)) {
-    //   deck[i]
-    //   console.log("Great Job");
-    //   this.setState({score: this.state.score += 1})
-    // }
-
-    // this.setState({
-    //   deck: deck,
-    //   numberFaceup: this.state.numberFaceup += 1,
-    //   cardValue: deck[i].value,
-    //   prev: deck[i]
-    // });
-    //
-    // if (this.state.numberFaceup === 2) {
-    //   deck[i].faceup = false;
-    //   prev.faceup = false;
-    //   this.setState({deck: deck})
-    //   return;
-    // }
-    //
-    // if (this.state.numberFaceup === 2) {
-    //   this.setState({prev: null, cardValue: null, numberFaceup: 0})
-    //   return;
-    // }
-
-
-
-
-
-
-
-    /****************Psuedo****************/
-    // Return early if there are already two cards face up
-
-    // flip the card that was clicked
-
-    // If there was a previous, check for match
-      // If there is a match, setTimeout to change cards to transparent
-
-    // IT SEEMS LIKE I PROBABLY DON'T NEED A COUNTER
-      // IF THERE IS A PREV, WE NEED TO FLIP THE CARDS OR REMOVE THE CARDS
-      // ELSE WE JUST FLIP THE CURRENT CARD
+    this.handleFlip(this.state, i);
   }
 
-  handleFlip(deck, cur, prev) {
+  handleFlip(state, i) {
+    const deck = state.deck.slice();
+    const prev = deck[this.state.prevIdx];
+    const cur = deck[i];
+
     cur.faceup = !cur.faceup;
-    this.setState({deck: deck});
-    let match = false;
+    this.setState({
+      deck: deck,
+      numberFaceup: this.state.numberFaceup += 1
+    });
 
     if (!prev) {
-      prev = cur;
-    } else if (cur.value === prev.value) {
-      console.log("We have a match!");
-      match = true;
+      this.setState({prevIdx: i})
     } else {
-      console.log("Not a match");
+      if (cur.value === prev.value) {
+        console.log("We have a match!");
+        setTimeout(() => this.handleMatch(deck, i), 3000);
+        // this.handleMatch(deck, i);
+      } else {
+        console.log("Not a match");
+        setTimeout(() => this.handleMismatch(deck, i), 1000);
+      }
     }
+  }
 
-    setTimeout(() => console.log('match: ', match), 3000);
+  handleMismatch(deck, i) {
+    [deck[i].faceup, deck[this.state.prevIdx].faceup] = [false, false];
+
+    this.setState({
+      deck: deck,
+      numberFaceup: 0,
+      prevIdx: null,
+    })
+  }
+
+  handleMatch(deck, i) {
+    [deck[i].value, deck[this.state.prevIdx].value, deck[i].suit, deck[this.state.prevIdx].suit] = [2, 2, 'clubs', 'clubs'];
+
+    this.setState({
+      deck: deck,
+      numberFaceup: 0,
+      prevIdx: null,
+      score: this.state.score += 1
+    })
   }
 
   renderCard(card, key) {
