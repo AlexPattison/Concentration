@@ -58,7 +58,7 @@ class Tableau extends React.Component {
       if (cur.value === prev.value) {
         setTimeout(() => this.handleMatch(deck, i), 1000);
       } else {
-        setTimeout(() => this.handleMismatch(deck, i), 3000);
+        setTimeout(() => this.handleMismatch(deck, i), 2000);
       }
     }
   }
@@ -94,6 +94,7 @@ class Tableau extends React.Component {
   render() {
     return (
       <div>
+        <p>Current Player: {this.state.currentPlayer}</p>
         <p>Player One Score: {this.state.playerOne.length / 2}</p>
         <p>Player Two Score: {this.state.playerTwo.length / 2}</p>
         {this.state.deck.map((card, key) => (

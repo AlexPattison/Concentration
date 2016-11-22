@@ -141,7 +141,7 @@
 	        } else {
 	          setTimeout(function () {
 	            return _this2.handleMismatch(deck, i);
-	          }, 3000);
+	          }, 2000);
 	        }
 	      }
 	    }
@@ -193,6 +193,12 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Current Player: ',
+	          this.state.currentPlayer
+	        ),
 	        _react2.default.createElement(
 	          'p',
 	          null,
