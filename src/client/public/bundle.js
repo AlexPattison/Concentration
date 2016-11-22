@@ -95,7 +95,8 @@
 	    var _this = _possibleConstructorReturn(this, (Tableau.__proto__ || Object.getPrototypeOf(Tableau)).call(this, props));
 	
 	    _this.state = {
-	      deck: shuffleDeck(createDeck()),
+	      playerOne: [],
+	      deck: createDeck(),
 	      numberFaceup: 0,
 	      prevIdx: null,
 	      score: 0
@@ -158,12 +159,17 @@
 	  }, {
 	    key: 'handleMatch',
 	    value: function handleMatch(deck, i) {
+	      var match = [deck[i], deck[this.state.prevIdx]];
+	      var dup = match.map(function (card) {
+	        return JSON.parse(JSON.stringify(card));
+	      });
 	      var _ref2 = [true, true];
-	      deck[i].blank = _ref2[0];
-	      deck[this.state.prevIdx].blank = _ref2[1];
+	      match[0].blank = _ref2[0];
+	      match[1].blank = _ref2[1];
 	
 	
 	      this.setState({
+	        playerOne: this.state.playerOne.concat(dup),
 	        deck: deck,
 	        numberFaceup: 0,
 	        prevIdx: null,
@@ -195,7 +201,19 @@
 	        ),
 	        this.state.deck.map(function (card, key) {
 	          return _this4.renderCard(card, key);
-	        })
+	        }),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Matches: '
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.playerOne.map(function (card, key) {
+	            return _this4.renderCard(card, key);
+	          })
+	        )
 	      );
 	    }
 	  }]);

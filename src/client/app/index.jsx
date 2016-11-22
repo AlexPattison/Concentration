@@ -24,7 +24,8 @@ class Tableau extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: shuffleDeck(createDeck()),
+      playerOne: [],
+      deck: createDeck(),
       numberFaceup: 0,
       prevIdx: null,
       score: 0,
@@ -72,9 +73,12 @@ class Tableau extends React.Component {
   }
 
   handleMatch(deck, i) {
-    [deck[i].blank, deck[this.state.prevIdx].blank] = [true, true];
+    const match = [deck[i], deck[this.state.prevIdx]];
+    const dup = match.map((card) => JSON.parse(JSON.stringify(card)));
+    [match[0].blank, match[1].blank] = [true, true];
 
     this.setState({
+      playerOne: this.state.playerOne.concat(dup),
       deck: deck,
       numberFaceup: 0,
       prevIdx: null,
@@ -93,6 +97,12 @@ class Tableau extends React.Component {
         {this.state.deck.map((card, key) => (
           this.renderCard(card, key)
         ))}
+        <p>Matches: </p>
+        <div>
+          {this.state.playerOne.map((card, key) => (
+            this.renderCard(card, key)
+          ))}
+        </div>
       </div>
     )
   }
