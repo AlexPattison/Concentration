@@ -134,13 +134,13 @@
 	          console.log("We have a match!");
 	          setTimeout(function () {
 	            return _this2.handleMatch(deck, i);
-	          }, 3000);
+	          }, 1000);
 	          // this.handleMatch(deck, i);
 	        } else {
 	          console.log("Not a match");
 	          setTimeout(function () {
 	            return _this2.handleMismatch(deck, i);
-	          }, 1000);
+	          }, 3000);
 	        }
 	      }
 	    }
@@ -161,11 +161,9 @@
 	  }, {
 	    key: 'handleMatch',
 	    value: function handleMatch(deck, i) {
-	      var _ref2 = [2, 2, 'clubs', 'clubs'];
-	      deck[i].value = _ref2[0];
-	      deck[this.state.prevIdx].value = _ref2[1];
-	      deck[i].suit = _ref2[2];
-	      deck[this.state.prevIdx].suit = _ref2[3];
+	      var _ref2 = [true, true];
+	      deck[i].blank = _ref2[0];
+	      deck[this.state.prevIdx].blank = _ref2[1];
 	
 	
 	      this.setState({

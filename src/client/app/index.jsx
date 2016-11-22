@@ -55,11 +55,11 @@ class Tableau extends React.Component {
     } else {
       if (cur.value === prev.value) {
         console.log("We have a match!");
-        setTimeout(() => this.handleMatch(deck, i), 3000);
+        setTimeout(() => this.handleMatch(deck, i), 1000);
         // this.handleMatch(deck, i);
       } else {
         console.log("Not a match");
-        setTimeout(() => this.handleMismatch(deck, i), 1000);
+        setTimeout(() => this.handleMismatch(deck, i), 3000);
       }
     }
   }
@@ -75,7 +75,7 @@ class Tableau extends React.Component {
   }
 
   handleMatch(deck, i) {
-    [deck[i].value, deck[this.state.prevIdx].value, deck[i].suit, deck[this.state.prevIdx].suit] = [2, 2, 'clubs', 'clubs'];
+    [deck[i].blank, deck[this.state.prevIdx].blank] = [true, true];
 
     this.setState({
       deck: deck,
